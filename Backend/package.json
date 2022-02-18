@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "mocha usertest.js",
+    "test": "mocha test/usertest.js",
     "start": "node server.js"
   },
   "dependencies": {
