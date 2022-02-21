@@ -5,19 +5,23 @@ var bodyParser = require('body-parser');;
 var logger = require('morgan')
 const path = require('path');
 
+var app = express();
 
 var usersRouter = require('./routes/userapi.js');
+app.use("/", usersRouter)
 
-var app = express();
+app.listen(3000, () => {
+    console.log(`Example app listening on port 3000`)
+})
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }))
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/users',usersRouter);
+app.use('/api/users', usersRouter);
 
 
-module.exports  = app;
+module.exports = app;

@@ -1,19 +1,25 @@
 var express = require('express');
+const userController = require('../controller/usercontroller');
 var router = express.Router();
 
-const user = [{ id: 1, name: "vefa", surname: "aksoy", email: "abc@gmail.com", phoneNo: "213546879" }]
+/*const authorization = (req, res, next) => {
+    let { username } = req.query
+    console.log(req.query)
+    if (username == "vefa") {
+        res.body = "premium"
+        next()
+    } else {
+        res.send({ "message": "invalid user" })
+    }
+}
+
+const last = (req, res, next) => {
+    next("Geçti" + res.body)
+}*/
 
 // api/users
-router.get('/', function (req, res) {
-    res.json(user);
-})
-router.get('/id', function (req, res, next) {
-    const resUser= user.find((user)=> user.id === Number(req.params.id));
-    if(!resUser){
-       return next(createError(404,'Not Found'));
-    }
-    res.json(resUser);
-})
+router.get('/', userController.getAllUsers); 
+router.get('/:id', userController.getUserByID)
 
 
 module.exports = router;
