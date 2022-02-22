@@ -1,5 +1,5 @@
 var express = require('express');
-const userController = require('../controller/usercontroller');
+const userController = require('../controller/usercontroller.js');
 var router = express.Router();
 
 /*const authorization = (req, res, next) => {
@@ -18,8 +18,12 @@ const last = (req, res, next) => {
 }*/
 
 // api/users
-router.get('/', userController.getAllUsers); 
-router.get('/:id', userController.getUserByID)
+router.get("/", userController.getAllUsers);
+router.get('/:id', userController.getUserByID);
+router.post("/", express.json(), userController.createUser);
+router.put("/:id",express.json(), userController.updateUser);
+router.delete("/:id", userController.deleteUser);
+
 
 
 module.exports = router;
