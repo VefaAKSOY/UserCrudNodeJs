@@ -1,6 +1,7 @@
 const app = require("../server.js");
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const User = require("../model/user.js");
 
 //Assertion style
 chai.should();
@@ -18,53 +19,50 @@ describe('User API Test', function () {
             });
     });
     it('Get /api/users/id --> get user by id', (done) => {
-        var userid = 1;
         chai.request(app)
-            .get("/api/users/" + userid)
+            .get("/api/users/3")
             .end((err, response) => {
                 response.should.have.status(200);
-                response.body.should.be.a('object');
+                response.body.should.be.a('array');
                 done();
             });
     })
-    it('Post /api/users --> create user', () => {
-        var user = {
-            id:1,
-            name: "vefa",
-            surname: "aksoy",
-            email: "abc@gmail.com",
-            phoneNo: "1321654",
-        }
-        chai.request(app)
-            .post("/api/users")
-            .send(user)
-            .end((err, response) => {
-                response.should.have.status(201);
-                done();
-            });
+    it('Post /api/users --> create user', (done) => {
+        var user = new User()
+        user.name = "Baran",
+            user.surname = "Kaya",
+            user.email = "baran.kaya@gmail.com",
+            user.phoneNo = "1321654",
+
+            chai.request(app)
+                .post("/api/users")
+                .send(user)
+                .end((err, response) => {
+                    response.should.have.status(200);
+                    done();
+                });
     })
-    it('Put api/users/id --> update user by id', () => {
-        var user = {
-            id:1,
-            name: "vefa",
-            surname: "aksoy",
-            email: "bayramvefa.aksoy@gmail.com",
-            phoneNo: "1321654",
-        }
-        var userId = 1
-        chai.request(app)
-            .put("/api/users/"+ userId)
-            .send(user)
-            .end((err, response) => {
-                response.should.have.status(200);
-                done();
-            });
+  it('Put api/users/id --> update user by id', (done) => {
+        var updateduser = new User();
+        updateduser.id = 3,
+        updateduser.name = "vefa",
+        updateduser.surname = "aksoy",
+        updateduser.email = "bayramvefa.aksoy@gmail.com",
+        updateduser.phoneNo = "1321654",
+
+            chai.request(app)
+                .put("/api/users/" + updateduser.id)
+                .send(updateduser)
+                .end((err, response) => {
+                    response.should.have.status(200);
+                    done();
+                });
     })
-    it('Delete /users/id --> Delete  user by id', () => {
-        
-        var userId = 1
+    it('Delete /users/id --> Delete  user by id', (done) => {
+
+        var userId = 3
         chai.request(app)
-            .delete("/api/users/"+ userId)
+            .delete("/api/users/" + userId)
             .end((err, response) => {
                 response.should.have.status(200);
                 done();

@@ -1,6 +1,6 @@
 const mysql = require('mysql')
 
-class dbCon{
+class dbCon {
     defineConnection() {
         var connection = mysql.createConnection({
             host: 'localhost',
@@ -11,7 +11,7 @@ class dbCon{
         })
         return connection;
     }
-    ExecuteQuery(callback) {
+    openConnection(){
         this.defineConnection().connect(function (err) {
             if (err) {
                 console.log("Error Occured while db Connecting");
@@ -19,12 +19,15 @@ class dbCon{
             else {
                 console.log("db connection succesfully")
             }
-        }) 
-        if (typeof callback == "function")
-            callback();
+        })
     }
-    closeConnection() {
-        this.defineConnection().end();
+    closeConnection(){
+        this.defineConnection().end()
     }
+    executeQuery() {
+        return this.defineConnection();
+        
+    }
+
 }
 module.exports = new dbCon();
