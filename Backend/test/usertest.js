@@ -19,8 +19,9 @@ describe('User API Test', function () {
             });
     });
     it('Get /api/users/id --> get user by id', (done) => {
+        var userId = 11;
         chai.request(app)
-            .get("/api/users/3")
+            .get("/api/users/"+ userId)
             .end((err, response) => {
                 response.should.have.status(200);
                 response.body.should.be.a('array');
@@ -29,9 +30,9 @@ describe('User API Test', function () {
     })
     it('Post /api/users --> create user', (done) => {
         var user = new User()
-        user.name = "Baran",
-            user.surname = "Kaya",
-            user.email = "baran.kaya@gmail.com",
+        user.name = "Recep",
+            user.surname = "Niyaz",
+            user.email = "recep.niyaz@gmail.com",
             user.phoneNo = "1321654",
 
             chai.request(app)
