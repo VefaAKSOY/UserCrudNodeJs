@@ -1,33 +1,22 @@
 const mysql = require('mysql')
 
 class dbCon {
-    defineConnection() {
+
+    getNewConnection(cb){
         var connection = mysql.createConnection({
             host: 'localhost',
             port: 3306,
             database: 'UsersDB',
             user: 'root',
             password: ''
-        })
-        return connection;
-    }
-    openConnection(){
-        this.defineConnection().connect(function (err) {
-            if (err) {
-                console.log("Error Occured while db Connecting");
-            }
-            else {
-                console.log("db connection succesfully")
-            }
-        })
-    }
-    closeConnection(){
-        this.defineConnection().end()
-    }
-    executeQuery() {
-        return this.defineConnection();
-        
-    }
+        });
+        connection.connect(function(err){
+            cb(err,connection);
+        }); 
+    };
 
+    closeConnection(connection){
+        connection.end()
+    };
 }
 module.exports = new dbCon();

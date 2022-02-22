@@ -9,11 +9,11 @@ class userController {
             .then(allUsers => { res.json(allUsers) })
             .catch(error => { console.log("An error occured getAllUsers::UserController: " + error.message) })
     }
-    getUserByID(req, res, next) {
+    getUser(req, res, next) {
         let { id } = req.params
-        const resUser = userDAL.getUserByID(id)
+        const resUser = userDAL.getUser(id)
             .then(resUser => { res.json(resUser) })
-            .catch(error => { console.log("An error occured getUserByID::UserController: " + error.message) })
+            .catch(error => { console.log("An error occured getUser::UserController: " + error.message) })
     }
 
     createUser(req, res, next) {

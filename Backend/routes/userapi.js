@@ -19,7 +19,7 @@ const last = (req, res, next) => {
 
 // api/users
 router.get("/", userController.getAllUsers);
-router.get('/:id', userController.getUserByID);
+router.get('/:id', userController.getUser);
 router.post("/", express.json(), userController.createUser);
 router.put("/:id",express.json(), userController.updateUser);
 router.delete("/:id", userController.deleteUser);
