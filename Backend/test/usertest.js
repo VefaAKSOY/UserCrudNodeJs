@@ -30,9 +30,9 @@ describe('User API Test', function () {
     })
     it('Post /api/users --> create user', (done) => {
         var user = new User()
-        user.name = "Recep",
-            user.surname = "Niyaz",
-            user.email = "recep.niyaz@gmail.com",
+        user.name = "Mehmet",
+            user.surname = "AKYÜZ",
+            user.email = "mehmet.akyuz@gmail.com",
             user.phoneNo = "1321654",
 
             chai.request(app)
