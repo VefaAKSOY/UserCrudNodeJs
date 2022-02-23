@@ -1,12 +1,29 @@
 const bodyParser = require('body-parser');
 const userDAL = require("../dataaccesslayer/userdal.js");
 const User = require('../model/user.js');
+const getLowerCase = require("../libs/commonclass.js")
 
 class userController {
 
     getAllUsers(req, res, next) {
-        const allUsers = userDAL.getAllUsers()
-            .then(allUsers => { res.json(allUsers) })
+        userDAL.getAllUsers()
+            .then(allUsers => {
+                const filters = req.query;
+                if (filters != null) {
+                    var lowerCasedUsers = getLowerCase(allUsers);
+                    const filteredUsers = lowerCasedUsers.filter(user => {
+                        let isValid = true;
+                        for (var key in filters) {
+                            isValid = isValid && user[key] == filters[key];
+                        }
+                        return isValid;
+                    })
+                    res.json(filteredUsers)
+                }
+                else {
+                    res.json(allUsers);
+                }
+            })
             .catch(error => { console.log("An error occured getAllUsers::UserController: " + error.message) })
     }
     getUser(req, res, next) {
@@ -59,22 +76,22 @@ class userController {
 
             })
     }
-    deleteUser(req, res, next){
-        let{ id } = req.params
+    deleteUser(req, res, next) {
+        let { id } = req.params
         userDAL.deleteUser(id)
-        .then(data => {
-            res.send({
-                message: "User deleted successfully!!",
-                isdeleted: data
+            .then(data => {
+                res.send({
+                    message: "User deleted successfully!!",
+                    isdeleted: data
+                })
+                console.log("User deleted successfully!!");
             })
-            console.log("User deleted successfully!!");
-        })
-        .catch(error => {
-            res.status(500).send({
-                message: error.message || "Some error occurred while creating user"
-            })
+            .catch(error => {
+                res.status(500).send({
+                    message: error.message || "Some error occurred while creating user"
+                })
 
-        })
+            })
     }
 }
 
