@@ -8,8 +8,9 @@ class userController {
     getAllUsers(req, res, next) {
         userDAL.getAllUsers()
             .then(allUsers => {
-                const filters = req.query;
+                var filters = req.query;
                 if (filters != null) {
+                    filters = getLowerCase(filters)
                     var lowerCasedUsers = getLowerCase(allUsers);
                     const filteredUsers = lowerCasedUsers.filter(user => {
                         let isValid = true;
