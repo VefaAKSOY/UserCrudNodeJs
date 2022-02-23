@@ -1,5 +1,5 @@
- var obj = {};
-     function getLowerCase(obj) {
+    
+    function getLowerCase(obj) {
             for (var prop in obj) {
                
                 if (typeof obj[prop] === "string") {

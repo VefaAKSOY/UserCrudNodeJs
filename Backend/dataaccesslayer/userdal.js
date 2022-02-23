@@ -6,9 +6,13 @@ const bodyParser = require('body-parser')
 
 class userDAL {
 
-    getAllUsers() {
+    getAllUsers(filters) {
         return new Promise((resolve, reject) => {
             let sqlQuery = "SELECT * FROM tbl_User";
+            if (filters != null && (filters.limit != undefined || filters.skip != undefined)) {
+                sqlQuery = sqlQuery + "\n" + "LIMIT "+ (parseInt(filters.limit)||18446744073709551615n) +" "+ "OFFSET " + (parseInt(filters.skip)||0); 
+            }
+            
             dbcon.getNewConnection(function (err, connection) {
                 if (err) {
                     console.log("An error occured while connecting db");
@@ -29,8 +33,10 @@ class userDAL {
                     })
                 }
             });
+            
         })
     };
+  
 
     getUser(id) {
         return new Promise((resolve, reject) => {
