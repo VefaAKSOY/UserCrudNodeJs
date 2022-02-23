@@ -6,11 +6,11 @@ const getLowerCase = require("../libs/commonclass.js")
 class userController {
 
     getAllUsers(req, res, next) {
-        userDAL.getAllUsers()
+        var filters = req.query;
+        userDAL.getAllUsers(filters)
             .then(allUsers => {
-                var filters = req.query;
-                if (filters != null) {
-                    filters = getLowerCase(filters)
+                if (filters != null && (filters.limit == undefined && filters.skip == undefined)) {
+                    filters = getLowerCase(filters);
                     var lowerCasedUsers = getLowerCase(allUsers);
                     const filteredUsers = lowerCasedUsers.filter(user => {
                         let isValid = true;
