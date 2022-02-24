@@ -1,6 +1,7 @@
 const dbcon = require("../libs/dbcon");
 const User = require("../model/user");
 const bodyParser = require('body-parser')
+const mysql = require('mysql')
 
 
 
@@ -10,9 +11,21 @@ class userDAL {
         return new Promise((resolve, reject) => {
             let sqlQuery = "SELECT * FROM tbl_User";
             if (filters != null && (filters.limit != undefined || filters.skip != undefined)) {
-                sqlQuery = sqlQuery + "\n" + "LIMIT "+ (parseInt(filters.limit)||18446744073709551615n) +" "+ "OFFSET " + (parseInt(filters.skip)||0); 
+                var limit = (parseInt(filters.limit) || 18446744073709551615n)
+                var skip = (parseInt(filters.skip) || 0)
+                sqlQuery = sqlQuery + "\n" + "LIMIT " + mysql.escape(limit) + " OFFSET " + mysql.escape(skip);
             }
-            
+            else if (Object.keys(filters).length != 0  && (filters.limit == undefined && filters.skip == undefined)) {
+                console.log(filters)
+                sqlQuery = sqlQuery + "\n" + "WHERE "
+                for (var key in filters) {
+                    sqlQuery = sqlQuery + ((key)) + " = " + (mysql.escape((filters[key]))) + "\n"
+                }
+                console.log(sqlQuery);
+            }
+            else {
+                
+            }
             dbcon.getNewConnection(function (err, connection) {
                 if (err) {
                     console.log("An error occured while connecting db");
@@ -33,10 +46,11 @@ class userDAL {
                     })
                 }
             });
-            
+
+
         })
     };
-  
+
 
     getUser(id) {
         return new Promise((resolve, reject) => {
@@ -69,12 +83,12 @@ class userDAL {
     createUser(user) {
         return new Promise((resolve, reject) => {
             let sqlQuery = "INSERT INTO tbl_User(Name, Surname, Email, PhoneNo) VALUES ?"
-            dbcon.getNewConnection(function(err, connection){
-                if(err){
+            dbcon.getNewConnection(function (err, connection) {
+                if (err) {
                     console.log("An error occured while connecting db");
                     reject(err)
                 }
-                else{
+                else {
                     console.log("Database connection succesfully")
                     var Values = [
                         [user.name, user.surname, user.email, user.phoneNo]
@@ -90,12 +104,12 @@ class userDAL {
                             dbcon.closeConnection(connection);
                             resolve(true);
                         }
-                    });         
+                    });
                 }
             })
-           
+
         })
-        
+
 
     }
 
@@ -104,12 +118,12 @@ class userDAL {
             var userForUpdate = { Name: user.name, Surname: user.surname, Email: user.email, PhoneNo: user.phoneNo }
             var condition = { UserID: user.id }
             let sqlQuery = "UPDATE tbl_User SET ? WHERE ?";
-            dbcon.getNewConnection(function(err, connection){
-                if(err){
+            dbcon.getNewConnection(function (err, connection) {
+                if (err) {
                     console.log("An error occured while connecting db");
                     reject(err);
                 }
-                else{
+                else {
                     console.log("Database connection succesfully")
                     connection.query(sqlQuery, [userForUpdate, condition], (err) => {
                         if (err) {
@@ -133,13 +147,13 @@ class userDAL {
         return new Promise((resolve, reject) => {
             var conditionForDelete = { "UserID": condition }
             let sqlQuery = "DELETE FROM tbl_User WHERE ?"
-            dbcon.getNewConnection(function(err, connection){
-                if(err){
+            dbcon.getNewConnection(function (err, connection) {
+                if (err) {
                     console.log("An error occured while connecting db");
                     reject(err)
-                    
+
                 }
-                else{
+                else {
                     console.log("Database connection succesfully")
                     connection.query(sqlQuery, conditionForDelete, (err) => {
                         if (err) {
