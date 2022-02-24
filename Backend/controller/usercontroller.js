@@ -9,21 +9,9 @@ class userController {
         var filters = req.query;
         userDAL.getAllUsers(filters)
             .then(allUsers => {
-                if (filters != null && (filters.limit == undefined && filters.skip == undefined)) {
-                    filters = getLowerCase(filters);
-                    var lowerCasedUsers = getLowerCase(allUsers);
-                    const filteredUsers = lowerCasedUsers.filter(user => {
-                        let isValid = true;
-                        for (var key in filters) {
-                            isValid = isValid && user[key] == filters[key];
-                        }
-                        return isValid;
-                    })
-                    res.json(filteredUsers)
-                }
-                else {
+              
                     res.json(allUsers);
-                }
+                
             })
             .catch(error => { console.log("An error occured getAllUsers::UserController: " + error.message) })
     }
