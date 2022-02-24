@@ -10,22 +10,43 @@ class userDAL {
     getAllUsers(filters) {
         return new Promise((resolve, reject) => {
             let sqlQuery = "SELECT * FROM tbl_User";
-            if (filters != null && (filters.limit != undefined || filters.skip != undefined)) {
-                var limit = (parseInt(filters.limit) || 18446744073709551615n)
-                var skip = (parseInt(filters.skip) || 0)
-                sqlQuery = sqlQuery + "\n" + "LIMIT " + mysql.escape(limit) + " OFFSET " + mysql.escape(skip);
-            }
-            else if (Object.keys(filters).length != 0  && (filters.limit == undefined && filters.skip == undefined)) {
-                console.log(filters)
+            if (Object.keys(filters).length != 0) {
                 sqlQuery = sqlQuery + "\n" + "WHERE "
                 for (var key in filters) {
-                    sqlQuery = sqlQuery + ((key)) + " = " + (mysql.escape((filters[key]))) + "\n"
+                    if ((key != "limit") && (key != "skip") && (key != "sort") && (key != "order")) {
+                        key = (mysql.escape(key))
+                        key = key.replace("'", "");
+                        key = key.replace("'", "");
+                        sqlQuery = sqlQuery + key + " = " + (mysql.escape((filters[key])))
+                    }
                 }
-                console.log(sqlQuery);
             }
-            else {
-                
+            if (Object.keys(filters).length != 0 && (filters.sort != undefined)) {
+                sqlQuery = sqlQuery + "\n" + "ORDER BY "
+                var order = (filters.order == undefined) ? 1 : filters.order
+                order = (filters.order == 1) ? "ASC" : "DESC"
+                order = mysql.escape(order)
+                order = order.replace("'", ' ');
+                order = order.replace("'", ' ');
+                var sort = mysql.escape(filters.sort)
+                sort = sort.replace("'", ' ');
+                sort = sort.replace("'", ' ');
+                sqlQuery = sqlQuery + sort + " " + order 
             }
+            if (filters != null && (filters.limit != undefined)) {
+                var limit = (", "+ (filters.limit))
+                var skip = (filters.skip);
+                if (skip == undefined){
+                    skip =  "";
+                    limit = ((parseInt(filters.limit)));
+                }
+                skip = mysql.escape(skip).replace("'", " ");
+                skip = skip.replace("'", " ");
+                limit = mysql.escape(limit).replace("'", "");
+                limit = limit.replace("'", "");
+                sqlQuery = sqlQuery + "\n" + "LIMIT " + skip + limit+ "\n" ;
+            }
+            
             dbcon.getNewConnection(function (err, connection) {
                 if (err) {
                     console.log("An error occured while connecting db");

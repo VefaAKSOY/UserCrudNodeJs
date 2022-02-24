@@ -7,6 +7,8 @@ class userController {
 
     getAllUsers(req, res, next) {
         var filters = req.query;
+       
+        
         userDAL.getAllUsers(filters)
             .then(allUsers => {
               
