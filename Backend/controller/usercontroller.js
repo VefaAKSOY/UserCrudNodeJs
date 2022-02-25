@@ -1,28 +1,28 @@
 const bodyParser = require('body-parser');
-const userDAL = require("../dataaccesslayer/userdal.js");
-const User = require('../model/user.js');
-const getLowerCase = require("../libs/commonclass.js")
+const userDAL = require("../dataaccesslayer/userdal");
+const User = require('../model/user');
+const ApiError = require("../middleware/error/apierror")
 
 class userController {
 
     getAllUsers(req, res, next) {
-        var filters = req.query;
-       
-        
+        var filters = req.query;   
         userDAL.getAllUsers(filters)
             .then(allUsers => {
-              
-                    res.json(allUsers);
-                
+                res.json(allUsers);
             })
-            .catch(error => { console.log("An error occured getAllUsers::UserController: " + error.message) })
+            .catch(error => {                 
+                next(error);
+            })
     }
-    getUser(req, res, next) {
+    /*getUser(req, res, next) {
         let { id } = req.params
         const resUser = userDAL.getUser(id)
             .then(resUser => { res.json(resUser) })
-            .catch(error => { console.log("An error occured getUser::UserController: " + error.message) })
-    }
+            .catch(error => { 
+                next(error)
+            })
+    }*/
 
     createUser(req, res, next) {
         var newuser = new User();
@@ -36,13 +36,9 @@ class userController {
                     message: "User created successfully!!",
                     user: data
                 })
-                console.log("User created successfully!!");
             })
             .catch(error => {
-                res.status(500).send({
-                    message: error.message || "Some error occurred while creating user"
-                })
-
+                next(error)
             })
     }
     updateUser(req, res, next) {
@@ -58,13 +54,9 @@ class userController {
                     message: "User updated successfully!!",
                     isupdated: data
                 })
-                console.log("User updated successfully!!");
             })
             .catch(error => {
-                res.status(500).send({
-                    message: error.message || "Some error occurred while creating user"
-                })
-
+                next(error)
             })
     }
     deleteUser(req, res, next) {
@@ -75,13 +67,9 @@ class userController {
                     message: "User deleted successfully!!",
                     isdeleted: data
                 })
-                console.log("User deleted successfully!!");
             })
             .catch(error => {
-                res.status(500).send({
-                    message: error.message || "Some error occurred while creating user"
-                })
-
+                next(error)
             })
     }
 }
