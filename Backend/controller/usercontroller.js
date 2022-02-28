@@ -42,9 +42,10 @@ class userController {
             })
     }
     updateUser(req, res, next) {
+        let { id } = req.params
         var updateduser = new User()
+        updateduser.id = id
         updateduser.email = req.body.email
-        updateduser.id = req.body.id
         updateduser.name = req.body.name
         updateduser.surname = req.body.surname
         updateduser.phoneNo = req.body.phoneNo

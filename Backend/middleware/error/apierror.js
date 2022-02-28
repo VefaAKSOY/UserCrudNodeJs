@@ -21,7 +21,11 @@ class ApiError{
     }
 
     static improperRequest(msg){
-        return new ApiError(513, msg)
+        return new ApiError(433, msg)
+    }
+    
+    static writingFileError(msg){
+        return new ApiError(432, msg)
     }
 }
 

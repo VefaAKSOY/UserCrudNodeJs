@@ -2,21 +2,25 @@ const dbcon = require("../libs/dbcon");
 const mysql = require('mysql');
 const ApiError = require('../middleware/error/apierror')
 const getLowerCaseKeys = require('../libs/commonclass');
-const apiErrorHandler = require("../middleware/Error/errorhandling");
-const User = require("../model/user");
 
 
 class userDAL {
-
     getAllUsers(filters) {
+        var today = new Date();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date + ' ' + time;
+        filters = getLowerCaseKeys(filters)
         return new Promise((resolve, reject) => {
+
+
             let sqlQuery = "SELECT * FROM tbl_User";
-            
-            if(Object.keys(filters).length != 0 &&
-            ((filters.limit == undefined && filters.skip != undefined) ||
-             (filters.sort == undefined && filters.order != undefined))){
-                return reject(ApiError.improperRequest("Improper Request Error: You can't query OFFSET " 
-                +"without LIMIT or you can't order without sort: getAllUser::UserDAL.js"));
+
+            if (Object.keys(filters).length != 0 &&
+                ((filters.limit == undefined && filters.skip != undefined) ||
+                    (filters.sort == undefined && filters.order != undefined))) {
+                return reject(ApiError.improperRequest("Improper Request Error: You can't query OFFSET "
+                    + "without LIMIT or you can't order without sort: getAllUser::UserDAL.js Date: " + dateTime));
             }
             if (Object.keys(filters).length != 0 &&
                 (filters.limit == undefined) && (filters.sort == undefined)) {
@@ -31,11 +35,10 @@ class userDAL {
                 }
             }
             if (Object.keys(filters).length != 0 && (filters.sort != undefined)) {
-                filters = getLowerCaseKeys(filters)
                 sqlQuery = sqlQuery + "\n" + "ORDER BY "
                 var order = (filters.order != undefined) ? parseInt(filters.order) : undefined;
                 if (order != undefined && isNaN(order)) {
-                    return reject(ApiError.improperRequest("Improper Request Error: Order must be integer getAllUser::UserDAL.js"))
+                    return reject(ApiError.improperRequest("Improper Request Error: Order must be integer getAllUser::UserDAL.js Date: " + dateTime))
                 }
                 order = (filters.order == undefined) ? 1 : filters.order
                 order = (filters.order == 1) ? "ASC" : "DESC"
@@ -51,7 +54,7 @@ class userDAL {
                 var skip = (filters.skip != undefined) ? parseInt(filters.skip) : undefined;
                 var limit = (parseInt(filters.limit))
                 if ((skip != undefined && isNaN(skip)) || isNaN(limit)) {
-                    return reject(ApiError.improperRequest("Improper Request Error: Skip or Limit must be integer: getAllUser::UserDAL.js:"))
+                    return reject(ApiError.improperRequest("Improper Request Error: Skip or Limit must be integer: getAllUser::UserDAL.js: Date" + dateTime))
                 }
                 limit = (", " + (filters.limit))
                 skip = (filters.skip);
@@ -68,14 +71,14 @@ class userDAL {
 
             dbcon.getNewConnection(function (err, connection) {
                 if (err) {
-                    return reject(ApiError.databaseConnectionError("Database Connection Error: getAllUser::UserDAL.js: " + err.message));
+                    return reject(ApiError.databaseConnectionError("Database Connection Error: getAllUser::UserDAL.js: " + err.message + " Date:" + dateTime));
                 } else {
                     console.log("Database connection succesfully")
                     console.log(sqlQuery);
                     connection.query(sqlQuery, (err, results) => {
                         if (err) {
                             dbcon.closeConnection(connection);
-                            return reject(ApiError.databaseError("Database Error: getAllUser::UserDAL.js:" + err.message));
+                            return reject(ApiError.databaseError("Database Error: getAllUser::UserDAL.js: " + err.message + " Date: " + dateTime));
                         }
                         else {
                             console.log("Succesfully");
@@ -92,37 +95,46 @@ class userDAL {
 
 
     getUser(id) {
-        
-            let sqlQuery = "SELECT * FROM tbl_User Where ? ";
-            dbcon.getNewConnection(function (err, connection) {
-                if (err) {
-                    return (ApiError.databaseConnectionError("Database Connection Error: getUser::UserDAL.js:" + err.message));
-                }
-                else {
-                    console.log("Database connection succesfully")
-                    var condition = { UserID: id }
-                    connection.query(sqlQuery, [condition], (err, results) => {
-                        if (err) {
-                            dbcon.closeConnection(connection);
-                            return (ApiError.databaseError("Database Error: getUser::UserDAL.js:" + err.message));
-                        }
-                        else {
-                            console.log("Succesfully");
-                            dbcon.closeConnection(connection);
-                            return (results);
-                        }
-                    });
-                }
-            })
-        
+        var today = new Date();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date + ' ' + time;
+        let sqlQuery = "SELECT * FROM tbl_User Where userid = ";
+        dbcon.getNewConnection(function (err, connection) {
+            if (err) {
+                return (ApiError.databaseConnectionError("Database Connection Error: getUser::UserDAL.js: " + err.message + " Date: " + dateTime));
+            }
+            else {
+                console.log("Database connection succesfully")
+                var uid = mysql.escape(id)
+                sqlQuery = sqlQuery + uid
+                console.log(sqlQuery)
+                connection.query(sqlQuery, (err, results) => {
+                    if (err) {
+                        dbcon.closeConnection(connection);
+                        return (ApiError.databaseError("Database Error: getUser::UserDAL.js: " + err.message + " Date: " + dateTime));
+                    }
+                    else {
+                        console.log("Succesfully");
+                        dbcon.closeConnection(connection);
+                        return JSON.stringify(results);
+                    }
+                });
+            }
+        })
+
     }
 
     createUser(user) {
+        var today = new Date();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date + ' ' + time;
         return new Promise((resolve, reject) => {
-            let sqlQuery = "INSERT INTO tbl_User(Name, Surname, Email, PhoneNo) VALUES ?"
+            let sqlQuery = "INSERT INTO tbl_User(name, surname, email, phoneno) VALUES ?"
             dbcon.getNewConnection(function (err, connection) {
                 if (err) {
-                    return reject(ApiError.databaseConnectionError("Database Connection Error: createUser::UserDAL.js:" + err.message));
+                    return reject(ApiError.databaseConnectionError("Database Connection Error: createUser::UserDAL.js: " + err.message + " Date: " + dateTime));
                 }
                 else {
                     console.log("Database connection succesfully")
@@ -132,10 +144,11 @@ class userDAL {
                     connection.query(sqlQuery, [Values], (err) => {
                         if (err) {
                             dbcon.closeConnection(connection);
-                            return reject(ApiError.databaseError("Database Error:  createUser::UserDAL.js: " + err.message));
+                            return reject(ApiError.databaseError("Database Error: createUser::UserDAL.js: " + err.message + " Date: " + dateTime));
                         }
                         else {
                             console.log("Succesfully");
+
                             dbcon.closeConnection(connection);
                             return resolve(true);
                         }
@@ -149,29 +162,34 @@ class userDAL {
     }
 
     updateUser(user) {
+        var today = new Date();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date + ' ' + time;
         return new Promise((resolve, reject) => {
-            user = this.getUser(user.id)
-            if(user==null){
-                return reject(ApiError.unknownUser("User Not Found Error:updateUser::UserDAL.js"))
-            }
-            var userForUpdate = { Name: user.name, Surname: user.surname, Email: user.email, PhoneNo: user.phoneNo }
-            var condition = { UserID: user.id }
-            let sqlQuery = "UPDATE tbl_User SET ? WHERE ?";
+            var userForUpdate = { name: user.name, surname: user.surname, email: user.email, phoneno: user.phoneNo }
+            var condition = { userid: user.id}
+            let sqlQuery = "UPDATE tbl_User SET ? WHERE ? AND EXISTS(SELECT 1 FROM tbl_User WHERE ? LIMIT 1)";
             dbcon.getNewConnection(function (err, connection) {
                 if (err) {
-                    return reject(ApiError.databaseConnectionError("Database Connection Error: updateUser::UserDAL.js: " + err.message));
+                    return reject(ApiError.databaseConnectionError("Database Connection Error: updateUser::UserDAL.js: " + err.message + " Date: " + dateTime));
                 }
                 else {
                     console.log("Database connection succesfully")
-                    connection.query(sqlQuery, [userForUpdate, condition], (err) => {
+                    connection.query(sqlQuery, [userForUpdate, condition, condition], (err, results) => {
                         if (err) {
                             dbcon.closeConnection(connection);
-                            return reject(ApiError.databaseError("Database Error: updateUser::UserDAL.js: " + err.message));
+                            return reject(ApiError.databaseError("Database Error: updateUser::UserDAL.js: " + err.message + " Date: " + dateTime));
                         }
                         else {
                             console.log("Succesfully");
                             dbcon.closeConnection(connection);
-                            return resolve(true);
+                            if (results.affectedRows == 0) {
+                                return reject(ApiError.unknownUser("User Not Found Error: deleteUser::UserDAL.js Date:" + dateTime))
+                            }
+                            else {
+                                return resolve(true);
+                            }
                         }
                     });
                 }
@@ -181,31 +199,34 @@ class userDAL {
     }
 
     deleteUser(condition) {
+        var today = new Date();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date + ' ' + time;
         return new Promise((resolve, reject) => {
-            var user = new User();
-            user = this.getUser(condition)
-            
-            if(user==null){
-                return reject(ApiError.unknownUser("User Not Found Error:deleteUser::UserDAL.js"))
-            }
-            condition = mysql.escape(condition)
 
-            let sqlQuery = "DELETE FROM tbl_User WHERE UserID = " + condition 
+            condition = mysql.escape(condition)
+            let sqlQuery = "DELETE FROM tbl_User WHERE userid = " + condition +
+                " AND EXISTS(SELECT 1 FROM tbl_User WHERE userid = " + condition + " LIMIT 1)";
             dbcon.getNewConnection(function (err, connection) {
                 if (err) {
-                    return reject(ApiError.databaseConnectionError("Database Connection Error: deleteUser::UserDAL.js: " + err.message));
+                    return reject(ApiError.databaseConnectionError("Database Connection Error: deleteUser::UserDAL.js: " + err.message + " Date: " + dateTime));
                 }
                 else {
                     console.log("Database connection succesfully")
-                    connection.query(sqlQuery, condition, (err) => {
+                    connection.query(sqlQuery, condition, (err, results) => {
                         if (err) {
                             dbcon.closeConnection(connection);
-                            return reject(ApiError.databaseError("Database Error: deleteUser::UserDAL.js: " + err.message));
+                            return reject(ApiError.databaseError("Database Error: deleteUser::UserDAL.js: " + err.message + " Date:" + dateTime));
                         }
                         else {
                             console.log("Succesfully");
                             dbcon.closeConnection(connection);
-                            return resolve(true)
+                            if (results.affectedRows == 0) {
+                                return reject(ApiError.unknownUser("User Not Found Error: deleteUser::UserDAL.js Date:" + dateTime))
+                            } else {
+                                return resolve(true)
+                            }
                         }
                     })
                 }
