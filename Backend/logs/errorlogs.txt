@@ -1,0 +1,20 @@
+Error Code: 433 Improper Request Error: You can't query OFFSET without LIMIT or you can't order without sort: getAllUser::UserDAL.js Date: 2022-2-28 12:22:40
+Error Code: 433 Improper Request Error: You can't query OFFSET without LIMIT or you can't order without sort: getAllUser::UserDAL.js Date: 2022-2-28 12:23:16
+Error Code: 419 User Not Found Error:deleteUser::UserDAL.js Date: 2022-2-28 14:21:45
+Error Code: 419 User Not Found Error:deleteUser::UserDAL.js Date: 2022-2-28 14:22:23
+Error Code: 419 User Not Found Error:deleteUser::UserDAL.js Date: 2022-2-28 14:22:53
+Error Code: 419 User Not Found Error:deleteUser::UserDAL.js Date: 2022-2-28 14:23:0
+Error Code: 419 User Not Found Error:deleteUser::UserDAL.js Date: 2022-2-28 14:23:39
+Error Code: 419 User Not Found Error:deleteUser::UserDAL.js Date: 2022-2-28 14:24:16
+Error Code: 419 User Not Found Error:deleteUser::UserDAL.js Date: 2022-2-28 14:25:1
+Error Code: 419 User Not Found Error:deleteUser::UserDAL.js Date: 2022-2-28 14:27:34
+Error Code: 419 User Not Found Error:deleteUser::UserDAL.js Date: 2022-2-28 14:28:16
+Error Code: 419 User Not Found Error:deleteUser::UserDAL.js Date: 2022-2-28 14:29:38
+Error Code: 419 User Not Found Error:deleteUser::UserDAL.js Date: 2022-2-28 15:9:56
+Error Code: 419 Unknown User Error: deleteUser::UserDAL.js Date:2022-2-28 15:29:5
+Error Code: 419 User Not Found Error: deleteUser::UserDAL.js Date:2022-2-28 15:52:52
+Error Code: 419 User Not Found Error: deleteUser::UserDAL.js Date:2022-2-28 15:55:0
+Error Code: 419 User Not Found Error: deleteUser::UserDAL.js Date:2022-2-28 15:56:9
+Error Code: 419 User Not Found Error: deleteUser::UserDAL.js Date:2022-2-28 15:58:11
+Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'LIMIT = '3'' at line 3 Date: 2022-2-28 15:59:34
+Error Code: 433 Improper Request Error: You can't query OFFSET without LIMIT or you can't order without sort: getAllUser::UserDAL.js Date: 2022-2-28 16:0:9
