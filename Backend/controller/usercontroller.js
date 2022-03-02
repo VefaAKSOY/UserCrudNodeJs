@@ -11,12 +11,13 @@ class userController {
         var filters = req.query;
 
         filters = getLowerCaseKeys(filters)
-        for (var key in filters) {
+        console.log(filters)
+        /*for (var key in filters) {
             if ((key != "limit") && (key != "skip") && (key != "sort") && (key != "order")) {
                 filters["query"] = key + "=" + filters[key];
                 delete filters[key];
             }
-        }
+        }*/
         filters.query = getQueryCondition(filters)
         console.log(filters);
         userDAL.getAllUsers(filters)
