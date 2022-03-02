@@ -1,7 +1,8 @@
 const dbcon = require("../libs/dbcon");
 const mysql = require('mysql');
 const ApiError = require('../middleware/error/apierror')
-const getLowerCaseKeys = require('../libs/commonclass');
+const getLowerCaseKeys = require('../libs/lowercasekeys');
+const getQueryCondition = require("../libs/filter");
 
 
 class userDAL {
@@ -10,11 +11,10 @@ class userDAL {
         var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         var dateTime = date + ' ' + time;
-        filters = getLowerCaseKeys(filters)
+
         return new Promise((resolve, reject) => {
-
-
             let sqlQuery = "SELECT * FROM tbl_User";
+           
 
             if (Object.keys(filters).length != 0 &&
                 ((filters.limit == undefined && filters.skip != undefined) ||
@@ -22,16 +22,16 @@ class userDAL {
                 return reject(ApiError.improperRequest("Improper Request Error: You can't query OFFSET "
                     + "without LIMIT or you can't order without sort: getAllUser::UserDAL.js Date: " + dateTime));
             }
-            if (Object.keys(filters).length != 0 &&
-                (filters.limit == undefined) && (filters.sort == undefined)) {
-                sqlQuery = sqlQuery + "\n" + "WHERE "
-                for (var key in filters) {
-                    if ((key != "limit") && (key != "skip") && (key != "sort") && (key != "order")) {
-                        key = (mysql.escape(key))
-                        key = key.replace("'", "");
-                        key = key.replace("'", "");
-                        sqlQuery = sqlQuery + "\n" + key + " = " + (mysql.escape((filters[key])))
-                    }
+
+            for (var key in filters) {
+                if ((key != "limit") && (key != "skip") && (key != "sort") && (key != "order")&&(filters.query!='')) {
+                    var queryCondition  = mysql.escape(filters.query)
+                    queryCondition = queryCondition.replace(/\\/g,'');
+                    queryCondition = queryCondition.slice(1);
+                    queryCondition = queryCondition.slice(0,-1);
+                    sqlQuery = sqlQuery + "\n" + "WHERE " + queryCondition;
+                    
+
                 }
             }
             if (Object.keys(filters).length != 0 && (filters.sort != undefined)) {
@@ -88,11 +88,8 @@ class userDAL {
                     })
                 }
             });
-
-
         })
     };
-
 
     getUser(id) {
         var today = new Date();
@@ -122,7 +119,6 @@ class userDAL {
                 });
             }
         })
-
     }
 
     createUser(user) {
@@ -155,10 +151,7 @@ class userDAL {
                     });
                 }
             })
-
         })
-
-
     }
 
     updateUser(user) {
@@ -168,7 +161,7 @@ class userDAL {
         var dateTime = date + ' ' + time;
         return new Promise((resolve, reject) => {
             var userForUpdate = { name: user.name, surname: user.surname, email: user.email, phoneno: user.phoneNo }
-            var condition = { userid: user.id}
+            var condition = { userid: user.id }
             let sqlQuery = "UPDATE tbl_User SET ? WHERE ? AND EXISTS(SELECT 1 FROM tbl_User WHERE ? LIMIT 1)";
             dbcon.getNewConnection(function (err, connection) {
                 if (err) {

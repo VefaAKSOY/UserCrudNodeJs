@@ -2,16 +2,29 @@ const bodyParser = require('body-parser');
 const userDAL = require("../dataaccesslayer/userdal");
 const User = require('../model/user');
 const ApiError = require("../middleware/error/apierror")
+const getLowerCaseKeys = require("../libs/lowercasekeys");
+const getQueryCondition = require('../libs/filter');
 
 class userController {
 
     getAllUsers(req, res, next) {
-        var filters = req.query;   
+        var filters = req.query;
+
+        filters = getLowerCaseKeys(filters)
+        for (var key in filters) {
+            if ((key != "limit") && (key != "skip") && (key != "sort") && (key != "order")) {
+                filters["query"] = key + "=" + filters[key];
+                delete filters[key];
+            }
+        }
+        filters.query = getQueryCondition(filters)
+        console.log(filters);
         userDAL.getAllUsers(filters)
             .then(allUsers => {
+                
                 res.json(allUsers);
             })
-            .catch(error => {                 
+            .catch(error => {
                 next(error);
             })
     }
