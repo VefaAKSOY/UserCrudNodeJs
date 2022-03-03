@@ -4,7 +4,7 @@ class ApiError{
         this.message = message;
     }
 
-    static unknownUser(msg){
+    static unknownEntity(msg){
         return new ApiError(419, msg);
     }
     
