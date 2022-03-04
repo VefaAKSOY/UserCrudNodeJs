@@ -22,14 +22,6 @@ class companyController {
                 next(error);
             })
     }
-    /*getUser(req, res, next) {
-        let { id } = req.params
-        const resUser = userDAL.getUser(id)
-            .then(resUser => { res.json(resUser) })
-            .catch(error => { 
-                next(error)
-            })
-    }*/
 
     createCompany(req, res, next) {
         var newCompany = new Company();

@@ -1,0 +1,37 @@
+<html>
+    <body>
+        <div class="container">
+            <div class="row">
+            <table class="table" >
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone No</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                    <th scope="col">Details</th>
+                </tr>
+                </thead>
+                <tbody>          
+                <tr *ngFor="let user of Repdata; let i = index" [attr.data-index]="i">           
+                    <th scope="row">{{user.userid}}</th>
+                    <td>{{user.name}}</td>
+                    <td>{{user.surname}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.phoneno}}</td>
+                    <td><!-- a (click)="edit(user)"
+                    style="color:blueviolet;cursor: pointer;"/-->Edit </td>
+                    <td><!-- a (click)="delete(user._id)"
+                    style="color:rgb(226, 43, 43);cursor: pointer;"/-->Delete </td>
+                    <td><!-- a (click)="delete(user._id)"
+                        style="color:rgb(226, 43, 43);cursor: pointer;"/-->Details </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </body>
+</html>
