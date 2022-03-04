@@ -70,3 +70,8 @@ Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_PARSE_ERROR: You have
 Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_BAD_FIELD_ERROR: Unknown column 'AKSOY' in 'where clause' Date: 2022-3-2 9:27:54
 Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''%1%' OR SURNAME LIKE A'%KSOY%' OR NAme LIKE M'%ehmet%'
 ORDER BY  Surname   A...' at line 2 Date: 2022-3-2 9:29:46
+Error Code: 509 Database Connection Error: getAllUser::UserDAL.js: connect ECONNREFUSED 127.0.0.1:3306 Date:2022-3-4 15:37:27
+Error Code: 509 Database Connection Error: getAllUser::UserDAL.js: connect ECONNREFUSED 127.0.0.1:3306 Date:2022-3-4 15:37:41
+Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 2 Date: 2022-3-4 15:58:39
+Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 2 Date: 2022-3-4 16:1:57
+Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 2 Date: 2022-3-4 16:6:17

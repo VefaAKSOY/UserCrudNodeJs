@@ -15,7 +15,7 @@ class userDAL {
         var dateTime = date + ' ' + time;
         
         return new Promise((resolve, reject) => {
-            let sqlQuery = "SELECT * FROM users AS U INNER JOIN companies AS C ON U.userscompanyid = C.companyid";
+            let sqlQuery = "SELECT * FROM users AS U LEFT JOIN companies AS C ON U.userscompanyid = C.companyid";
 
 
             if (Object.keys(filters).length != 0 &&
