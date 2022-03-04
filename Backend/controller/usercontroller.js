@@ -21,7 +21,14 @@ class userController {
                 next(error);
             })
     }
-
+    getUser(req, res, next) {
+        let { id } = req.params
+        const resUser = userDAL.getUser(id)
+            .then(resUser => { res.json(resUser) })
+            .catch(error => { 
+                next(error)
+            })
+    }
 
     createUser(req, res, next) {
         var newuser = new User();
