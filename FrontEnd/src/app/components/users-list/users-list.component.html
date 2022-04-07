@@ -1,9 +1,12 @@
-<html>
-    <body>
-        <div class="container">
-            <div class="row">
-            <table class="table" >
-                <thead class="thead-light">
+
+<div class="container">
+    <div class="table-responsive">
+       <ag-grid-angular 
+       class="ag-theme-alpine"
+       [rowData]="rowData "
+       [columnDefs]="columnDefs" ></ag-grid-angular>
+      <!--  <table class="table">
+            <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">First Name</th>
@@ -14,24 +17,27 @@
                     <th scope="col">Delete</th>
                     <th scope="col">Details</th>
                 </tr>
-                </thead>
-                <tbody>          
-                <tr *ngFor="let user of Repdata; let i = index" [attr.data-index]="i">           
-                    <th scope="row">{{user.userid}}</th>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let user of Repdata; let i = index" [attr.data-index]="i">
+                    <td>{{user.userid}}</td>
                     <td>{{user.name}}</td>
                     <td>{{user.surname}}</td>
                     <td>{{user.email}}</td>
                     <td>{{user.phoneno}}</td>
-                    <td><!-- a (click)="edit(user)"
-                    style="color:blueviolet;cursor: pointer;"/-->Edit </td>
-                    <td><!-- a (click)="delete(user._id)"
-                    style="color:rgb(226, 43, 43);cursor: pointer;"/-->Delete </td>
-                    <td><!-- a (click)="delete(user._id)"
-                        style="color:rgb(226, 43, 43);cursor: pointer;"/-->Details </td>
+                
+                
+                    <td>
+                         <a (click)="edit(user)" style="color:blueviolet;cursor: pointer;"/>Edit
+                    </td>
+                    <td>
+                        <a (click)="delete(user._id)"style="color:rgb(226, 43, 43);cursor: pointer;"Delete
+                     </td>
+                    <td><a style="color:rgb(58, 226, 43);cursor: pointer;">Details </a> </td>
+
                 </tr>
-                </tbody>
-            </table>
-        </div>
-        </div>
-    </body>
-</html>
+            </tbody>
+        </table>-->
+    </div>
+</div>

@@ -75,3 +75,20 @@ Error Code: 509 Database Connection Error: getAllUser::UserDAL.js: connect ECONN
 Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 2 Date: 2022-3-4 15:58:39
 Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 2 Date: 2022-3-4 16:1:57
 Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 2 Date: 2022-3-4 16:6:17
+Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_BAD_FIELD_ERROR: Unknown column 'PHONE' in 'where clause' Date: 2022-3-7 1:25:23
+Error Code: 509 Database Connection Error: getAllUser::UserDAL.js: connect ECONNREFUSED 127.0.0.1:3306 Date:2022-3-7 9:14:55
+Error Code: 509 Database Connection Error: getAllUser::UserDAL.js: connect ECONNREFUSED 127.0.0.1:3306 Date:2022-3-7 9:15:2
+Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_BAD_FIELD_ERROR: Unknown column 'user.userid' in 'where clause' Date: 2022-3-7 10:45:16
+Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_BAD_FIELD_ERROR: Unknown column 'user.userid' in 'where clause' Date: 2022-3-7 10:45:25
+Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_BAD_FIELD_ERROR: Unknown column 'user.userid' in 'where clause' Date: 2022-3-7 10:45:50
+Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_BAD_FIELD_ERROR: Unknown column 'user.userid' in 'where clause' Date: 2022-3-7 10:45:57
+Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_BAD_FIELD_ERROR: Unknown column 'undefined' in 'where clause' Date: 2022-3-7 10:47:15
+Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_BAD_FIELD_ERROR: Unknown column 'undefined' in 'where clause' Date: 2022-3-7 10:57:34
+Error Code: 433 Improper Request Error: Order must be integer getAllUser::UserDAL.js Date: 2022-3-7 11:16:50
+Error Code: 433 Improper Request Error: Order must be integer getAllUser::UserDAL.js Date: 2022-3-7 11:17:3
+Error Code: 433 Improper Request Error: Order must be integer getAllUser::UserDAL.js Date: 2022-3-7 11:18:25
+Error Code: 509 Database Connection Error: getAllUser::UserDAL.js: connect ECONNREFUSED 127.0.0.1:3306 Date:2022-3-28 14:40:9
+Error Code: 509 Database Connection Error: getAllUser::UserDAL.js: connect ECONNREFUSED 127.0.0.1:3306 Date:2022-3-31 11:28:6
+Error Code: 419 User Not Found Error: deleteUser::UserDAL.js Date:2022-3-31 11:43:28
+Error Code: 419 User Not Found Error: deleteUser::UserDAL.js Date:2022-3-31 11:43:28
+Error Code: 509 Database Connection Error: getAllUser::UserDAL.js: connect ECONNREFUSED 127.0.0.1:3306 Date:2022-4-7 10:32:5
