@@ -11,6 +11,8 @@ import { UsersListComponent } from './components/users-list/users-list.component
 
 import { UsersService } from './services/users-service.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AgGridModule } from 'ag-grid-angular';
+
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    AgGridModule.withComponents([])
   ],
   providers: [UsersService],
   bootstrap: [AppComponent]
