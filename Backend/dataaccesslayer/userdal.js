@@ -75,23 +75,14 @@ class userDAL {
                 if (err) {
                     return reject(ApiError.databaseConnectionError("Database Connection Error: getAllUser::UserDAL.js: " + err.message + " Date:" + dateTime));
                 } else {
-                    console.log("Database connection succesfully")
-                    console.log(sqlQuery);
                     connection.query(sqlQuery, (err, results) => {
                         if (err) {
                             dbcon.closeConnection(connection);
                             return reject(ApiError.databaseError("Database Error: getAllUser::UserDAL.js: " + err.message + " Date: " + dateTime));
                         }
                         else {
-                            console.log("Succesfully");
                             dbcon.closeConnection(connection);
-     
-                               
-                           
-                                
-                                
-                            
-                            return resolve(results);
+                           return resolve(results);
                         }
                     })
                 }
@@ -111,17 +102,14 @@ class userDAL {
                     return reject(ApiError.databaseConnectionError("Database Connection Error: getUser::UserDAL.js: " + err.message + " Date: " + dateTime));
                 }
                 else {
-                    console.log("Database connection succesfully")
                     var uid = mysql.escape(id)
                     sqlQuery = sqlQuery + uid
-                    console.log(sqlQuery)
                     connection.query(sqlQuery, (err, results) => {
                         if (err) {
                             dbcon.closeConnection(connection);
                             return reject(ApiError.databaseError("Database Error: getUser::UserDAL.js: " + err.message + " Date: " + dateTime));
                         }
                         else {
-                            console.log("Succesfully");
                             dbcon.closeConnection(connection);
                             
                             return resolve(results);
@@ -144,7 +132,6 @@ class userDAL {
                     return reject(ApiError.databaseConnectionError("Database Connection Error: createUser::UserDAL.js: " + err.message + " Date: " + dateTime));
                 }
                 else {
-                    console.log("Database connection succesfully")
                     var Values = [
                         [user.name, user.surname, user.email, user.phoneNo]
                     ];
@@ -154,7 +141,6 @@ class userDAL {
                             return reject(ApiError.databaseError("Database Error: createUser::UserDAL.js: " + err.message + " Date: " + dateTime));
                         }
                         else {
-                            console.log("Succesfully");
 
                             dbcon.closeConnection(connection);
                             return resolve(true);
@@ -179,14 +165,12 @@ class userDAL {
                     return reject(ApiError.databaseConnectionError("Database Connection Error: updateUser::UserDAL.js: " + err.message + " Date: " + dateTime));
                 }
                 else {
-                    console.log("Database connection succesfully")
                     connection.query(sqlQuery, [userForUpdate, condition, condition], (err, results) => {
                         if (err) {
                             dbcon.closeConnection(connection);
                             return reject(ApiError.databaseError("Database Error: updateUser::UserDAL.js: " + err.message + " Date: " + dateTime));
                         }
                         else {
-                            console.log("Succesfully");
                             dbcon.closeConnection(connection);
                             if (results.affectedRows == 0) {
                                 return reject(ApiError.unknownEntity("User Not Found Error: deleteUser::UserDAL.js Date:" + dateTime))
@@ -217,14 +201,12 @@ class userDAL {
                     return reject(ApiError.databaseConnectionError("Database Connection Error: deleteUser::UserDAL.js: " + err.message + " Date: " + dateTime));
                 }
                 else {
-                    console.log("Database connection succesfully")
                     connection.query(sqlQuery, condition, (err, results) => {
                         if (err) {
                             dbcon.closeConnection(connection);
                             return reject(ApiError.databaseError("Database Error: deleteUser::UserDAL.js: " + err.message + " Date:" + dateTime));
                         }
                         else {
-                            console.log("Succesfully");
                             dbcon.closeConnection(connection);
                             if (results.affectedRows == 0) {
                                 return reject(ApiError.unknownEntity("User Not Found Error: deleteUser::UserDAL.js Date:" + dateTime))

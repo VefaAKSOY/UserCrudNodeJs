@@ -92,3 +92,8 @@ Error Code: 509 Database Connection Error: getAllUser::UserDAL.js: connect ECONN
 Error Code: 419 User Not Found Error: deleteUser::UserDAL.js Date:2022-3-31 11:43:28
 Error Code: 419 User Not Found Error: deleteUser::UserDAL.js Date:2022-3-31 11:43:28
 Error Code: 509 Database Connection Error: getAllUser::UserDAL.js: connect ECONNREFUSED 127.0.0.1:3306 Date:2022-4-7 10:32:5
+Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_NO_SUCH_TABLE: Table 'usersdb.users' doesn't exist Date: 2022-4-8 10:17:39
+Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_BAD_FIELD_ERROR: Unknown column 'U.userscompanyid' in 'on clause' Date: 2022-4-8 10:48:23
+Error Code: 420 Database Error: getAllUser::UserDAL.js: ER_BAD_FIELD_ERROR: Unknown column 'U.userscompanyid' in 'on clause' Date: 2022-4-8 10:48:28
+Error Code: 509 Database Connection Error: getAllUser::UserDAL.js: connect ECONNREFUSED 127.0.0.1:3306 Date:2022-4-8 15:12:17
+Error Code: 509 Database Connection Error: getAllUser::UserDAL.js: connect ECONNREFUSED 127.0.0.1:3306 Date:2022-4-8 15:13:25

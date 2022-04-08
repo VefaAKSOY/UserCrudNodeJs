@@ -21,13 +21,13 @@ export class UsersListComponent implements OnInit {
   Repdata: any; 
   filters: any;
   columnDefs :ColDef[]=  [
-    {headerName:"#",field:"userid", sortable:true, filter:true, checkboxSelection:true },
-    {headerName:"NAME",field:"name", sortable:true, filter:true },
-    {headerName:"SURNAME",field:"surname", sortable:true, filter:true },
-    {headerName:"E-MAIL",field:"email", sortable:true, filter:true },
-    {headerName:"PHONE NUMBER",field:"phoneno", sortable:true, filter:true },
-    {headerName:"COMPANY",field:"companyname", sortable:true, filter:true },
-    {headerName:"DESCRİPTION",field:"description", sortable:true, filter:true },
+    {headerName:"#",field:"UserId", sortable:true, filter:true, checkboxSelection:true },
+    {headerName:"NAME",field:"Name", sortable:true, filter:true },
+    {headerName:"SURNAME",field:"Surname", sortable:true, filter:true },
+    {headerName:"E-MAIL",field:"Email", sortable:true, filter:true },
+    {headerName:"PHONE NUMBER",field:"PhoneNo", sortable:true, filter:true },
+    {headerName:"COMPANY",field:"CompanyName", sortable:true, filter:true },
+    {headerName:"DESCRİPTION",field:"Description", sortable:true, filter:true },
     
   ];
   rowData:any
@@ -40,6 +40,7 @@ export class UsersListComponent implements OnInit {
     this.route.queryParams.subscribe(params => this.filters = params)
     this.UsersService.getAll(filters).subscribe((data: any)=>{
       this.rowData = data;
+      console.log(this.rowData);
     })
   }
   ngOnInit(): void {
